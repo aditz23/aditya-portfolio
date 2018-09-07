@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <link href="https://fonts.googleapis.com/css?family=abril+Fatface" rel="stylesheet">
+
+
+<div class="asd container jumbotron">FREECODECAMP SIMON</div>
+<div id="box">
+		<div id="green" class="choice"></div>
+		<div id="red" class="choice"></div>
+		<div id="yellow" class="choice"></div>
+		<div id="blue" class="choice"></div>
+	<div id="center">
+		<p id="tex">Simon Game Free Code Camp</p>
+		<div id="center-row2">
+			<div><p id="start">Play</p><button id="start-button" class="center-button">&nbsp;</button></div>
+			<div><p id="strict">Strict</p><button id="strict-button" class="center-button">&nbsp;</button></div>
+			<div id="length"><br/><span id='len-num'>--</span></div>
+			</div>
+		</div>
+	</div>
+
+<audio data-color="green" src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></audio>
+<audio data-color="red" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></audio>
+<audio data-color="yellow" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></audio>
+<audio data-color="blue" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
+<audio data-color="wrong" src="http://res.cloudinary.com/mbglasser/video/upload/v1515535080/Wrong-answer-sound-effect_utv073.mp3"></audio>
+	<audio data-color="win" src="http://res.cloudinary.com/mbglasser/video/upload/v1515537944/applause2_nenes2.mp3"></audio>
+
+
+
+
+<style>
+
+#tex {
+	text-align: center;
+	margin-bottom: -5px;
+}
+
+#center-row2 {
+	display: grid;
+	grid-template: repeat(2,1fr) / repeat(2,1fr);
+	text-align: center;
+}
+
+#center-row2 p {
+	margin-bottom: 0px;
+}
+.center-button {
+	border: 1px solid black;
+	background-color: brown;
+
+}
+
+#length {
+	color: red;
+	background-color: black;
+	border-radius: 2px;
+	width: 45px;
+	height: 35px;
+	padding-bottom: 5px;
+	margin: auto;
+	margin-top: -10px;
+	grid-column: 1 / 3;
+
+}
+.asd {
+	font-size: 50px;
+	text-align: center;
+
+}
+#box {
+	display: grid;
+	grid-template: repeat(2,200px) / repeat(2,200px);
+	grid-gap: 0px;
+	justify-content: center;
+	border: 5px solid black;
+	width: 400px;
+	height: 400px;
+	margin: 0 auto;
+border: 1px solid black;
+}
+.choice {
+	width: 200px;
+	height: 200px;
+	margin: 0px;
+
+}
+button:hover, {
+	opacity: 0.4;
+}
+
+#green {
+	background-color: green;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+}
+#red {
+	background-color: red;
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+}
+#yellow {
+	background-color: yellow;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}
+#blue {
+	background-color: blue;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+}
+#center{
+	background-color: white;
+	border: 1px solid black;
+	height: 175px;
+	width: 175px;
+	padding: 5px;
+	position: relative;
+	bottom: 300px;
+	left: 100px;
+	z-index: 5;
+	background-color: white;
+
+
+}
+
+
+</style>
+
+
+
+<script>
+var playing = false;
+var mode = "Strict";
+var easyRepeat = false;
+const colorArray = ['green','red','yellow','blue'];
+var seriesLength = 0;
+var compSeries = [];
+var yourTurn = false;
+var yourStep = 0;
+var answerTimer = 0;
+$('#strict-button').on('click', function() {
+	mode == 'Strict' ? mode = 'Easy' : mode = 'Strict';
+	$('#strict').text(mode);
+});
+
+$('.choice').hover(function() {
+	if (playing && yourTurn) {
+		$(this).css('opacity','0.5');
+	}
+}, function() {
+	$(this).css('opacity','1');
+});
+
+$('.choice').on('click',function() {
+	if (playing && yourTurn) {
+		var color = this.id;
+		playSound(color);
+		clearTimeout(answerTimer);
+
+		if (color != compSeries[yourStep]) {
+			console.log("wrong color");
+			youLose();
+		}
+		else {
+			//console.log(`Step ${yourStep + 1} (${color}) was right!`);
+			yourStep++;
+			if (yourStep == 20) {
+				clearTimeout(answerTimer);
+				setTimeout(function() {
+					$('body').css('background-color','green');
+						setTimeout(function() {
+						$('body').css('background-color','white');
+							}, 1750);
+					//Play applause
+					playSound('win');
+					$('#len-num').text('!!');
+					$('#start').text('Play');
+					playing = false;
+					yourTurn = false;
+					yourStep = 0;
+					seriesLength = 0;
+					compSeries = [];
+					setTimeout(function() {
+						$('#len-num').text('--');
+						}, 3000);
+				}, 500);
+				return;
+			}
+			else if (yourStep == seriesLength) {
+				yourTurn = false;
+				yourStep = 0;
+				setTimeout(playGame, 1000);
+			}
+			else {
+				answerTimer = setTimeout(youLose, 5000);
+			}
+		}
+
+	}
+});
+$('#start-button').on('click',function() {
+	if (playing) {
+		clearTimeout(answerTimer);
+		$('#start').text('Play');
+		playing = false;
+		yourTurn = false;
+		yourStep = 0;
+		seriesLength = 0;
+		compSeries = [];
+		$('#len-num').text('--');
+	}
+	else {
+		$('#start').text('Stop');
+		playing = true;
+		playGame();
+	}
+})
+
+function playGame() {
+	if (!easyRepeat) {
+		compSeries.push(generateColor());
+		seriesLength++;
+		$('#len-num').text(seriesLength);
+	}
+	else {
+		easyRepeat = false;
+	}
+	compSeries.forEach(function(elem, index) {
+		setTimeout(function() {
+			flashColor(elem);
+			playSound(elem);
+		}, 1000 * index);
+	});
+	console.log(compSeries);
+	yourTurn = true;
+	answerTimer = setTimeout(youLose, 5000 + (1000 * seriesLength));
+
+}
+function youLose() {
+	$('body').css('background-color','red');
+	setTimeout(function() {
+		$('body').css('background-color','white');
+	}, 1000);
+	playSound('wrong');
+	if (mode == 'Strict') {
+		compSeries = [];
+		seriesLength = 0;
+		$('#len-num').text('XX');
+		$('#start').text('Play');
+		playing = false;
+		yourTurn = false;
+		yourStep = 0;
+		setTimeout(function() {
+			$('#len-num').text('--');
+		}, 1000);
+		console.log("You lost");
+	}
+	else {
+		console.log("Try again");
+		easyRepeat = true;
+		setTimeout(playGame,2000);
+		yourTurn = false;
+		yourStep = 0;
+	}
+}
+
+function playSound(color) {
+	const audio = document.querySelector(`audio[data-color="${color}"]`);
+	audio.play();
+	return;
+}
+
+function flashColor(color) {
+	const colorButton = document.querySelector(`div[id='${color}']`);
+	$(colorButton).css('opacity','0.5');
+	setTimeout(function() {
+		$(colorButton).css('opacity','1');
+	}, 250);
+}
+
+function generateColor() {
+	return colorArray[Math.floor(Math.random() * 4)];
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+</html>

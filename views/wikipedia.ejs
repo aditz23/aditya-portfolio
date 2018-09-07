@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+   <body>
+   <div class="container jumbotron">
+  <div class="row">
+    <div class="col-md-10 col-sm-10 col-xs-10 text-center">
+
+      <form id="search">
+        <div class="input text-center" style="margin-left:20%;"><h1>Wikipedia</h1>
+        <input type="text" class="input-group" placeholder="Search">
+<br>
+        <input type="submit" value="Search" class="btn btn-primary">
+<br>      <br>
+      <button id="random" type="button" class="btn btn-danger">Random</button>
+        </div></form></div></div>
+<div class="row">
+    <div id="search_results" class="col-md-8 offset-md-2 my-3">
+    </div>
+  </div>
+</div>
+   </body>
+
+
+
+
+
+
+
+
+
+<style>
+
+
+h5 {
+  font-weight: bold;
+}
+
+
+form {
+  display: inline;
+}
+
+</style>
+
+
+
+
+
+
+<script>
+function getWiki(query) {
+  var url =
+    "https://en.wikipedia.org" +
+    "/w/api.php?action=opensearch&format=json&search=" +
+    query +
+    "&formatversion=2";
+ $.ajax({
+    url: url,
+    dataType: "jsonp",
+    headers: {
+      "Api-User-Agent":
+        "MyCoolTool/1.1 (http://example.com/MyCoolTool/; MyCoolTool@example.com) BasedOnSuperLib/1.4"
+    },
+    success: function(data) {
+      console.log(data);
+      console.log(data[1].length);
+var resultTitles = "";
+for (var i = 0; i < data[1].length; i++) {
+        resultTitles +=
+          "<a href='" +
+          data[3][i] +
+          "' target='_blank'>" +
+          "<h5>" +
+          data[1][i] +
+          "</h5><p>" +
+          data[2][i] +
+          "</p>" +
+          "</a>";
+      }
+$("#search_results").html(resultTitles);
+console.log(resultTitles);
+    }
+  });
+}
+$("document").ready(function() {
+  $("#search").submit(function() {
+    event.preventDefault();
+    getWiki($("input").val());
+  });
+
+  $("#random").click(function() {
+    var win = window.open("https://en.wikipedia.org/wiki/Special:Random", "_blank");
+    if (win) {
+      win.focus();
+    } else {
+      alert("Please allow popups for this website");
+    }
+  });
+});
+</script>
+</html>

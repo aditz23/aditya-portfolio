@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.3.2/css/weather-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+<body>
+
+<div class = "container well well-sm">
+  <div class = "rows">
+    <header class="col-xs-12 text-center">
+      <h1>Local Weather App</h1>
+    </header>
+    <div class = "col-8-xs text-center" id= "location">
+      <p id= "coordinates">Coordinates</p>
+      <span id="city"><strong>City, </span>
+        <span id ="state">State </span></strong>
+    </div>
+    <div id="currentWeather">
+      <p id = "weather">Weather</p>
+      <figure class="icons">
+        <canvas id ="icon"></canvas>
+      </figure>
+      <div id ="temperature">
+        <p class="hidden"id = "temp_c">Temp °C</p>
+        <p id="temp_fahr">Temp F</p>
+        <button type="button" class="btn btn-primary">Celsius/Fahrenheit</button>
+<h4>Developed by Aditya Priyadarshi</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+<style>
+body{
+  background-image:url(http://cdn.coda-craven.org/wp-content/uploads/2016/10/good-weather--coda-craven.jpg);
+ -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.container {
+opacity:0.7;
+  text-align:center;
+}
+</style>
+
+
+
+<script>
+//variables
+var latitude = 0;
+var longitude = 0;
+var currentPosition;
+var currentWeather = "clear";
+var cityName = "Austin";
+var stateName = "NV";
+var wCode = 0;
+var icons = new Skycons({"color":"black"});
+
+//get coordinates
+if(navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function(position){
+    currentPosition = position;
+    latitude = currentPosition.coords.latitude;
+    longitude = currentPosition.coords.longitude;
+    var timeStp = currentPosition.timestamp;
+
+    $("#coordinates").html("<strong>Latitude: </strong>" + latitude + "<br><strong>Longitude: </strong>" +longitude);
+
+    var locationURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&sensor=false";
+    $.getJSON(locationURL, function(json) {
+      var rawJson = JSON.stringify(json)
+      var pJson = JSON.parse(rawJson);
+      cityName = json.results[0].address_components[2].long_name;
+      stateName = json.results[0].address_components[4].short_name;
+      $("#city").html(cityName);
+      $("#state").html(stateName);
+    })
+
+    var url = "https://api.apixu.com/v1/current.json?key=99db7fdf0c2b421f824220552172306&q="+cityName;
+
+   $.getJSON(url, function(data) {
+      $("#temp_c").html(data.current.temp_c + " °C");
+      $("#temp_fahr").html(data.current.temp_f + " F");
+      $("#weather").html(data.current.condition.text);
+      wCode = data.current.condition.code;
+     //general codes for icon and background
+     if(wCode ==1000) {
+        icons.set("icon",Skycons.CLEAR_DAY);
+      }
+     else if (wCode == 1063 || wCode == 1072 || (wCode >=1150 && wCode<=1201) || (wCode>=1240 && wCode<=1246)) {
+       $("body").css("background-image", "url(http://cdn2-europe1.new2.ladmedia.fr/var/europe1/storage/images/europe1/societe/le-temps-mardi-instable-sur-le-centre-est-retour-au-calme-ailleurs-3517865/45678812-1-fre-FR/Le-temps-mardi-instable-sur-le-Centre-Est-retour-au-calme-ailleurs.jpg)");
+       icons.set("icon",Skycons.RAIN);
+      }
+      else if((wCode >= 1066 && wCode <=1069)|| (wCode >= 1114 && wCode <=1117) ||(wCode>=1204 && wCode <=1237) || (wCode>=1249 && wCode<=1264)) {
+       $("body").css("background-image", "url(https://i.pinimg.com/originals/ce/6f/f4/ce6ff4900400f3b5d58398a3338e4833.jpg)");
+       icons.set("icon",Skycons.SNOW);
+      }
+     else {
+       $("body").css("background-image", "url(https://wallpaperscraft.com/image/sky_clouds_bad_weather_dark_blue_gloomy_wheat_ranks_53138_3840x2400.jpg)");
+       icons.set("icon",Skycons.CLOUDY);
+     }
+     icons.play();
+    })
+    });
+  var clicks = 0;
+$("button").click(function() {
+  clicks++;
+  if((clicks % 2) == 1) {
+    $("#temp_c").removeClass("hidden");
+    $("#temp_fahr").addClass("hidden");
+  }
+  else {
+    $("#temp_c").addClass("hidden");
+    $("#temp_fahr").removeClass("hidden");
+  }
+})
+}
+
+</script>
+</html>

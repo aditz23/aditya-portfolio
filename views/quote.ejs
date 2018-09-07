@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<body> <h1 style="font-size:400%;"><strong>Random Quote Generator</Strong></h1>
+<div class="container">
+
+    <div class="quote-box">
+        <div class="quote">
+
+            <blockquote>
+                <span class="quot"></span>
+  <span class="auth"></span>
+</div>
+            </blockquote>
+        </div>
+        <div class="name">
+            <button class="btn btn-success" id="quote" type="submit">New
+    Quote</button>
+  <a href="#" class ="btn btn-primary" id="tweet" >Tweet Out</a>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<style>
+body {
+    background-image: url("https://www.hdwallpapers.in/walls/fractals_designs_4k-wide.jpg");
+background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+h1{
+color:white;
+width: 800px;
+margin: 0 auto;
+}
+.container {
+    width: 400px;
+margin: 0 auto;
+}
+
+
+.quote {
+    background-color: #6b936a;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    font-size: 20px;
+}
+.name {
+    background-color: #333;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: #fff;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Reset */
+blockquote {
+    padding: 0;
+    margin: 0;
+}
+blockquote::after {
+    border-color: transparent #6b936a transparent transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 20px;
+    top: 40px;
+    content: " ";
+    display: block;
+    right: 75%;
+    position: relative;
+
+}
+.btn{
+  margin-top : 20px;
+  margin-bottom : 20px;
+}
+
+.quotes,.authors{
+ padding: 20px;
+  margin : auto;
+  height : auto;
+}
+</style>
+
+
+
+<script>
+$(document).ready(function(){
+  var a;
+  var b;
+  var n;
+  getQ();
+    $("#quote").on("click", function(){
+    getQ();
+  });
+
+  $("#tweet").on("click",function(){
+    window.open("https://twitter.com/intent/tweet?text="+ a+" "+b);
+  });
+
+
+  function getQ()
+{
+
+  var q = ["I love you the more in that I believe you had liked me for my own sake and for nothing else","But man is not made for defeat. A man can be destroyed but not defeated","When you reach the end of your rope, tie a knot in it and hang on","There is nothing permanent except change","You cannot shake hands with a clenched fist","Let us sacrifice our today so that our children can have a better tomorrow","It is better to be feared than loved, if you cannot be both","The most difficult thing is the decision to act, the rest is merely tenacity. The fears are paper tigers. You can do anything you decide to do. You can act to change and control your life; and the procedure, the process is its own reward"];
+
+  var au = ["―John Keats","―Ernest Hemingway","―Franklin D. Roosevelt","―Heraclitus","―Indira Gandhi","―A. P. J. Abdul Kalam","―Niccolo Machiavelli","―Amelia Earhart"];
+
+  n = Math.floor(Math.random()*q.length);
+
+  a = q[n];
+  b = au[n];
+
+    $(".quot").text(a);
+    $(".auth").text(b);
+
+}
+
+
+
+
+
+
+
+});
+</script>
+</html>

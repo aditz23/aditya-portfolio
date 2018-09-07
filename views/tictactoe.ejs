@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <link href="https://fonts.googleapis.com/css?family=abril+Fatface" rel="stylesheet">
+
+
+
+
+<h1 style="text-align: center;">FREECODECAMP TIC-TAC-TOE</H1>
+<div class="container" style="margin-left:500px;">
+  <div class="params">
+    <div class="row text-center">
+      <div class="col-sm-6">
+        <h1>Choose one.</h1>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-3" onclick="initBoard('X')">
+        <h1><span class="choice">X</span></h1>
+      </div>
+      <div class="col-sm-3" onclick="initBoard('O')">
+        <h1><span class="choice">O</span></h1>
+      </div>
+    </div>
+  </div>
+  <div class="board">
+    <div class="row text-center">
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-1">
+        <h3 class="draws">draws<br/>0</h3>
+      </div>
+      <div class="col-sm-1">
+        <h3 class="playerScore">Player<br/>0</h3>
+      </div>
+      <div class="col-sm-1 ">
+        <h3 class="computerScore">Computer<br/>0</h3>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-sm-2 square" onclick="clicked('.square11')">
+        <span class="square11"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square12')">
+        <span class="square12"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square13')">
+        <span class="square13"></span>
+      </div>
+    </div>
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-2 square" onclick="clicked('.square21')">
+        <span class="square21"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square22')">
+        <span class="square22"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square23')">
+        <span class="square23"></span>
+      </div>
+    </div>
+    <div class="row justify-content-center text-center">
+      <div class="col-sm-2 square" onclick="clicked('.square31')">
+        <span class="square31"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square32')">
+        <span class="square32"></span>
+      </div>
+      <div class="col-sm-2 square" onclick="clicked('.square33')">
+        <span class="square33"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+body{
+  background-image:url(https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg);
+background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+h1 {
+margin-top:100px;
+  color: Royalblue ;
+  text-align: center;
+font-family:Lucida Console;
+}
+
+h3 {
+font-family:Lucida Console;
+  color: Royalblue ;
+  text-align: center;
+}
+
+
+.square {
+  border: 2px solid black;
+  height: 130px;
+}
+
+
+span {
+font-family:Lucida Console;
+  font-size: 100px;
+  color: black;
+  text-align: center;
+}
+
+.board {
+  display: none;
+}
+
+.choice {
+  cursor: pointer;
+}
+</style>
+
+
+
+<script>
+var player = [];
+var computer = [];
+
+var winners = [
+  ['.square11', '.square12', '.square13'],
+  ['.square21', '.square22', '.square23'],
+  ['.square31', '.square32', '.square33'],
+  ['.square11', '.square21', '.square31'],
+  ['.square12', '.square22', '.square32'],
+  ['.square13', '.square23', '.square33'],
+  ['.square11', '.square22', '.square33'],
+  ['.square13', '.square22', '.square31']
+];
+
+var clickedSquares = [];
+
+var gameOver = false;
+
+var playerSign;
+var computerSign;
+
+var playerScore = 0;
+var computerScore = 0;
+var draws = 0;
+
+function initBoard(choice) {
+  if (choice == "X"){
+    playerSign = "X";
+    computerSign = "O"
+  }
+  if (choice == "O"){
+    playerSign = "O";
+    computerSign = "X"
+  }
+
+  $(".params").css("display", "none");
+  $(".board").css("display", "block");
+}
+
+function clicked(square){
+  if (clickedSquares.indexOf(square) < 0 && player.length === computer.length){
+    player.push(square);
+    $(square).text(playerSign);
+    clickedSquares.push(square);
+    getResult();
+    if(!gameOver && player.length > 0){
+      computerPlay();
+    }
+    getResult();
+  }
+}
+
+function getResult(){
+  winners.forEach(function(item, index, arr) {
+    var p = item.filter(function(val) {
+      return player.indexOf(val) !== -1;
+    });
+    var c = item.filter(function(val) {
+      return computer.indexOf(val) !== -1;
+    });
+    if (p.length == 3){
+      playerScore++;
+      $(".playerScore").html("Player<br/>" + playerScore);
+      gameOver = true;
+      clearBorad();
+    }
+    else if(c.length == 3){
+      computerScore++;
+      $(".computerScore").html("Computer<br/>" + computerScore);
+      gameOver = true;
+      clearBorad();
+    }
+  })
+
+  if (player.length == 5 || computer.length == 5) {
+    draws++;
+    $(".draws").html("Draws<br/>" + draws);
+    gameOver = true;
+    clearBorad();
+  }
+}
+
+function computerPlay(){
+  var square = ComputerChoice();
+  computer.push(square);
+  $(square).text(computerSign);
+  clickedSquares.push(square);
+}
+
+function clearBorad(){
+  gameOver = false;
+  player = [];
+  computer = [];
+  clickedSquares.forEach(function(item) {
+    $(item).text("");
+  })
+   clickedSquares = [];
+}
+
+function ComputerChoice(){
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square22") >= 0 && clickedSquares.indexOf(".square33") < 0) return ".square33";
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square33") >= 0 && clickedSquares.indexOf(".square22") < 0) return ".square22";
+  if(player.indexOf(".square22") >= 0 && player.indexOf(".square33") >= 0 && clickedSquares.indexOf(".square11") < 0) return ".square11";
+
+  if(player.indexOf(".square13") >= 0 && player.indexOf(".square22") >= 0 && clickedSquares.indexOf(".square31") < 0) return ".square31";
+  if(player.indexOf(".square13") >= 0 && player.indexOf(".square31") >= 0 && clickedSquares.indexOf(".square22") < 0) return ".square22";
+  if(player.indexOf(".square31") >= 0 && player.indexOf(".square22") >= 0 && clickedSquares.indexOf(".square13") < 0) return ".square13";
+
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square12") >= 0 && clickedSquares.indexOf(".square13") < 0) return ".square13";
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square13") >= 0 && clickedSquares.indexOf(".square12") < 0) return ".square12";
+  if(player.indexOf(".square12") >= 0 && player.indexOf(".square13") >= 0 && clickedSquares.indexOf(".square1") < 0) return ".square11";
+
+  if(player.indexOf(".square21") >= 0 && player.indexOf(".square22") >= 0 && clickedSquares.indexOf(".square23") < 0) return ".square23";
+  if(player.indexOf(".square21") >= 0 && player.indexOf(".square23") >= 0 && clickedSquares.indexOf(".square22") < 0) return ".square22";
+  if(player.indexOf(".square22") >= 0 && player.indexOf(".square23") >= 0 && clickedSquares.indexOf(".square21") < 0) return ".square21";
+
+  if(player.indexOf(".square31") >= 0 && player.indexOf(".square32") >= 0 && clickedSquares.indexOf(".square33") < 0) return ".square33";
+  if(player.indexOf(".square31") >= 0 && player.indexOf(".square33") >= 0 >= 0 && clickedSquares.indexOf(".square32") < 0) return ".square32";
+  if(player.indexOf(".square32") >= 0 && player.indexOf(".square33") >= 0 && clickedSquares.indexOf(".square31") < 0) return ".square31";
+
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square21") >= 0 && clickedSquares.indexOf(".square31") < 0) return ".square31";
+  if(player.indexOf(".square11") >= 0 && player.indexOf(".square31") >= 0 && clickedSquares.indexOf(".square21") < 0) return ".square21";
+  if(player.indexOf(".square21") >= 0 && player.indexOf(".square31") >= 0 && clickedSquares.indexOf(".square11") < 0) return ".square11";
+
+  if(player.indexOf(".square12") >= 0 && player.indexOf(".square22") >= 0 && clickedSquares.indexOf(".square32") < 0) return ".square32";
+  if(player.indexOf(".square12") >= 0 && player.indexOf(".square32") >= 0 && clickedSquares.indexOf(".square22") < 0) return ".square22";
+  if(player.indexOf(".square22") >= 0 && player.indexOf(".square32") >= 0 && clickedSquares.indexOf(".square12") < 0) return ".square12";
+
+  if(player.indexOf(".square13") >= 0 && player.indexOf(".square23") >= 0 && clickedSquares.indexOf(".square33") < 0) return ".square33";
+  if(player.indexOf(".square13") >= 0 && player.indexOf(".square33") >= 0 && clickedSquares.indexOf(".square23") < 0) return ".square23";
+  if(player.indexOf(".square23") >= 0 && player.indexOf(".square33") >= 0 && clickedSquares.indexOf(".square13") < 0) return ".square13";
+
+  if(clickedSquares.indexOf(".square11") < 0) return ".square11";
+  if(clickedSquares.indexOf(".square33") < 0) return ".square33";
+  if(clickedSquares.indexOf(".square13") < 0) return ".square13";
+  if(clickedSquares.indexOf(".square31") < 0) return ".square31";
+  if(clickedSquares.indexOf(".square22") < 0) return ".square22";
+  if(clickedSquares.indexOf(".square32") < 0) return ".square32";
+  if(clickedSquares.indexOf(".square21") < 0) return ".square21";
+
+  for(var i = 1 ; i <= 3 ; i++){
+    for(var j = 1 ; j <=3 ; j++){
+      if (clickedSquares.indexOf(".square"+i+j) < 0) return ".square"+i+j;
+    }
+  }
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+</html>

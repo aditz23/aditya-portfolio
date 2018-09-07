@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+
+   <body></body>
+
+
+
+   <div class="container-fluid">
+
+       <div class="col">
+
+             <div style="margin:auto; padding-top:3%; width:70%"class="row-xs-12 row-lg-4 row-md-4 row-sm-4">
+            <div style="opacity:0.8" class="well a">
+
+   <div id="twitch" class="text-center">
+       <h1>Twitch Streamers</h1>
+
+   </div>
+   <br>
+   <div id="buttons" class="text-center">
+      <button  class="btn btn-success" onclick="myFunctionOnline()">
+           Online
+       </button>
+
+      <button class="btn btn-primary" onclick="show()">
+          All
+      </button>
+
+
+       <button  class="btn btn-danger" onclick="myFunctionOffline()">
+
+           Offline
+       </button>
+
+   </div>
+               </div>
+
+            </div>
+
+
+       </div>
+
+   </div>
+
+
+    <div  style="margin:7%" class="container-fluid">
+
+          <div class="row">
+
+
+              <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+
+               <div id="card0" class="card">
+<img id="img0" class="card-img-top img-responsive"  src="">
+  <div style="padding:2%" class="card-block">
+
+      <a id="href0" target="_blank" rel="noreferrer noopener"><h4 id="card_title0" class="card-title"></h4></a>
+    <p id="card_status0" class="card-text"></p>
+
+  </div>
+
+               </div>
+          </div>
+
+
+
+            <div   class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+
+
+               <div id="card1" class="card">
+<img id="img1" class="card-img-top img-responsive"  src="">
+  <div style="padding:2%" class="card-block">
+      <a id="href1" target="_blank" rel="noreferrer noopener"><h4 id="card_title1" class="card-title"></h4></a>
+    <p id="card_status1" class="card-text"></p>
+
+  </div>
+
+               </div>
+          </div>
+
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+
+
+               <div id="card2"class="card">
+<img id="img2" class="card-img-top img-responsive"  src="">
+  <div style="padding:2%" class="card-block">
+      <a id="href2" target="_blank" rel="noreferrer noopener"><h4 id="card_title2" class="card-title"></h4></a>
+    <p id="card_status2" class="card-text"></p>
+
+  </div>
+
+               </div>
+          </div>
+
+
+       </div>
+
+   </div>
+
+   <div style="width:50%" class="container-fluid">
+
+         <div  class="row">
+           <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+
+
+
+               <div style="float:right" id="card3" class="card">
+<img id="img3" class="card-img-top img-responsive"  src="">
+  <div style="padding:2%" class="card-block">
+      <a id="href3" target="_blank" rel="noreferrer noopener" ><h4 id="card_title3" class="card-title"></h4></a>
+    <p id="card_status3" class="card-text"></p>
+
+  </div>
+
+               </div>
+          </div>
+           <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+
+               <div id="card4" class="card">
+<img id="img4" class="card-img-top img-responsive"  src="">
+  <div style="padding:2%" class="card-block">
+      <a id="href4" target="_blank" rel="noreferrer noopener"><h4 id="card_title4" class="card-title"></h4></a>
+    <p id="card_status4" class="card-text"></p>
+
+  </div>
+
+               </div>
+          </div>
+
+
+       </div>
+
+
+
+   </div>
+
+   <br>
+   <br>
+
+
+   <footer class="text-responsive text-center footer">
+
+       <h5>Developed By Aditya Priyadarshi</h5>
+
+
+
+   </footer>
+
+
+<style>
+body{
+
+    background:url("http://www.wallpaperbetter.com/wallpaper/122/711/713/superman-fallen-hero-1080P-wallpaper.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width:100%;
+    min-height:200px;
+    opacity: 0.8;
+    background-color: white;
+}
+
+
+.card:hover {
+
+background-color:antiquewhite;
+box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.99);
+
+    opacity:1;
+
+}
+
+
+.container {
+opacity:0.7;
+    padding: 2px 16px;
+}
+
+#twitch{
+    color: black;
+    margin-top:3%;
+}
+
+
+#img{
+    width: 100%;
+    height:80px;
+}
+
+.hide {
+    display: none;
+
+}
+
+.show {
+    display:block;
+}
+
+button:hover{
+   box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.99);
+     transform: scale(1.1);
+
+}
+
+.footer{
+    color:White;
+      background: linear-gradient(to left, #875643, #095675);
+    padding: 1%;
+    width:100%;
+
+}
+
+
+
+
+</style>
+
+
+
+
+
+
+<script>
+
+$('document').ready(function(){
+
+    var array=["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp","RobotCaleb"];
+
+
+    for (var i = 0; i <5; i++) {
+
+
+
+    (function(i) {
+         var url="https://wind-bow.glitch.me/twitch-api/streams/"+array[i]+"/?callback";
+      $.getJSON(url, function (data) {
+
+     $("#card_title"+i).html(array[i]);
+     //document.getElementById("href"+i).href=data.stream.channel.url;
+
+    if(data.stream===null){
+         $("#card_status"+i).html("Currently Offline");
+    }
+          else{
+
+                $("#card_status"+i).html("Currently Online");
+          }
+
+
+
+      });
+    })(i);
+}
+    for (var i = 0; i <5; i++) {
+
+
+
+    (function(i) {
+         var url="https://wind-bow.glitch.me/twitch-api/channels/"+array[i]+"/?callback";
+      $.getJSON(url, function (data) {
+
+     $("#card_title"+i).html(array[i]);
+     document.getElementById("href"+i).href=data.url;
+
+
+
+          document.getElementById("img"+i).src=data.profile_banner;
+          document.getElementById("img"+i).style.height="100px";
+          document.getElementById("img"+i).style.width="100%";
+
+
+
+      });
+    })(i);
+}
+});
+
+
+
+
+function show()
+{
+     var array=["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp","RobotCaleb"];
+
+
+    for (var i = 0; i <5; i++) {
+
+
+
+    (function(i) {
+         var url="https://wind-bow.glitch.me/twitch-api/streams/"+array[i]+"/?callback";
+      $.getJSON(url, function (data) {
+
+
+             $("#card"+i).addClass("show");
+            $("#card"+i).removeClass("hide");
+          if(data.stream===null){
+         $("#card_status"+i).html("Currently Offline");
+
+    }
+          else{
+
+                $("#card_status"+i).html("Currently Online");
+          }
+
+
+      });
+    })(i);
+}
+
+}
+
+function myFunctionOffline() {
+    var array=["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp","RobotCaleb"];
+
+    var a=0;
+
+    for (var i = 0; i <5; i++) {
+
+
+
+    (function(i) {
+         var url="https://wind-bow.glitch.me/twitch-api/streams/"+array[i]+"/?callback";
+
+
+
+      $.getJSON(url, function (data) {
+
+
+
+    if(data.stream==null)
+        {
+             $("#card"+i).addClass("show");
+            $("#card"+i).removeClass("hide");
+
+        }
+    else{
+
+        $("#card"+i).addClass("hide");
+            $("#card"+i).removeClass("show");
+
+        a++;
+
+    }
+
+       if(a==5)
+           {
+              alert("All channels are  currently online");
+           }
+
+
+
+
+      });
+    })(i);
+}
+
+
+}
+
+function myFunctionOnline() {
+
+
+    var array=["ESL_SC2", "OgamingSC2","cretetion", "freecodecamp","RobotCaleb"];
+    var s=0;
+
+    for (var i = 0; i <5; i++) {
+
+
+
+    (function(i) {
+         var url="https://wind-bow.glitch.me/twitch-api/streams/"+array[i]+"/?callback";
+      $.getJSON(url, function (data) {
+
+    if(data.stream!==null)
+        {
+            $("#card"+i).addClass("show");
+              $("#card_status"+i).html(data.stream.channel.status);
+             $("#card"+i).removeClass("hide");
+        }
+
+          else{
+               s++;
+               $("#card"+i).addClass("hide");
+             $("#card"+i).removeClass("show");
+
+          }
+
+        if(s==5)
+            {
+               alert("All channels are currently offline");
+            }
+
+      });
+    })(i);
+}
+
+}
+
+
+
+
+
+
+
+
+
+</script>
+</html>

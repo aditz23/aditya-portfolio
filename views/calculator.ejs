@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<body>
+  <div class="container">
+    <div id="calculator" class="col-md-12">
+      <div class="row">
+        <div id="dp">Enter</div>
+      </div>
+      <div class="row">
+        <button class="function btn btn-default btn-success" data-action="ac">AC</button>
+        <button class="function btn btn-default btn-success" data-action="ce">CE</button>
+        <button class="function btn btn-default btn-danger" data-action="/">&divide;</button>
+        <button class="function btn btn-default btn-danger" data-action="*">&times;</button>
+      </div>
+      <div class="row">
+        <button class="number btn btn-default btn-primary" data-action="7">7</button>
+        <button class="number btn btn-default btn-primary" data-action="8">8</button>
+        <button class="number btn btn-default btn-primary" data-action="9">9</button>
+        <button class="function btn btn-default btn-danger" data-action="-">&minus;</button>
+      </div>
+      <div class="row">
+        <button class="number btn btn-default btn-primary" data-action="4">4</button>
+        <button class="number btn btn-default btn-primary" data-action="5">5</button>
+        <button class="number btn btn-default btn-primary" data-action="6">6</button>
+        <button class="function btn btn-default btn-danger" data-action="+">&plus;</button>
+      </div>
+      <div class="row">
+        <button class="number btn btn-default btn-primary" data-action="1">1</button>
+        <button class="number btn btn-default btn-primary" data-action="2">2</button>
+        <button class="number btn btn-default btn-primary" data-action="3">3</button>
+      </div>
+      <div class="row">
+        <button class="number btn btn-default btn-primary" id="zero" data-action="0">0</button>
+        <button class="number btn btn-default btn-warning" data-action=".">.</button>
+        <button class="function btn btn-default btn-warning" id="equals" data-action="equals">&equals;</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+
+
+<style>
+
+
+
+
+
+
+body{
+
+    background:url("https://www.wallpaperup.com/uploads/wallpapers/2012/07/28/7493/d53ee454712cfcc88dbc5a217fc2722c.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+#dp {
+  text-align: right;
+  width: 14.5rem;
+  margin: 15px 10px;
+  padding: 20px;
+  border: 3px solid black;
+  color: white
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+
+  border: 2px solid black;
+  color: black;
+}
+#zero {
+  width: 110px;
+}
+
+#equals {
+  postion: absolute;
+  height: 110px;
+  margin: -55px 2px 0 5px;
+}
+
+
+
+
+</style>
+
+<script>
+
+(function () {
+
+  let dp = '0';
+  let ls = '';
+  let ip = true;
+
+  $('button').click(function () {
+    let action = $(this).attr('data-action');
+    if (ip) {
+      dp = '';
+      ip = false;
+    }
+    switch (action) {
+      case "ac":
+        allClear();
+        break;
+      case "ce":
+        clearEntry();
+        break;
+      case "equals":
+        equals();
+        break;
+      default:
+        handleInput(action);
+        break;
+    }
+  });
+
+  function refreshCalc(result) {
+    $('#dp').text(result);
+  }
+
+  function allClear() {
+    dp = '0';
+    ls = '';
+    ip = true;
+    refreshCalc(dp);
+  }
+
+  function clearEntry() {
+    dp = ls;
+    refreshCalc(dp);
+  }
+
+  function equals() {
+    ls = dp;
+    dp = eval(dp);
+    refreshCalc(dp);
+  }
+
+  function handleInput(button) {
+    if (dp.length < 20) {
+      ls = dp;
+      dp += button;
+      refreshCalc(dp);
+    }
+  }
+})();
+
+</script>
+</html>
